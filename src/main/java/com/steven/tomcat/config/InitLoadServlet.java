@@ -66,7 +66,11 @@ public class InitLoadServlet {
                 packageClass = packageClass.replaceAll("/",".").replaceAll("\\\\",".");
 
                 Class<?> aClass = Class.forName(packageClass);
-                String superClass = aClass.getSuperclass().getName();
+                final Class<?> superclass = aClass.getSuperclass();
+                if(superclass == null){
+                    return;
+                }
+                String superClass = superclass.getName();
                 if ("com.steven.tomcat.lib.MyServlet".equals(superClass)) {
                     String url = generateHttpUrl(className);
                     if(URL_KEY_SET.contains(url)){
